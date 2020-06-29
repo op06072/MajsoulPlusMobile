@@ -1,0 +1,136 @@
+{
+  "name": "majsoul-plus",
+  "version": "2.0.1",
+  "productName": "Majsoul Plus",
+  "author": "Majsoul Plus Team",
+  "description": "Majsoul Plus",
+  "main": "./dist/index.js",
+  "scripts": {
+    "sass": "node-sass -q assets/manager/ -o assets/manager/",
+    "pre-build": "tsc && yarn sass && node build.js",
+    "debug": "cross-env NODE_ENV=development run-electron .",
+    "debug:server": "cross-env NODE_ENV=development SERVER_ONLY=1 run-electron .",
+    "debug:detailed": "cross-env NODE_ENV=development run-electron . --enable-logging --v=1 --disable-gpu",
+    "start": "yarn pre-build && yarn debug",
+    "start:detailed": "yarn pre-build && yarn debug:detailed",
+    "dist": "yarn pre-build && electron-builder --x64 --ia32 --publish onTagOrDraft",
+    "build": "yarn pre-build && electron-builder --x64 --ia32",
+    "lint": "gts check",
+    "lint:fix": "gts fix",
+    "clean": "gts clean"
+  },
+  "build": {
+    "productName": "Majsoul Plus",
+    "artifactName": "Majsoul_Plus-${version}-${platform}-${arch}.${ext}",
+    "directories": {
+      "output": "build/"
+    },
+    "files": [
+      "dist/**/*"
+    ],
+    "fileAssociations": {
+      "ext": [
+        "mspr",
+        "mspe",
+        "mspm",
+        "mspt"
+      ],
+      "description": "Majsoul Plus ResourcePack/Extension/Tool",
+      "icon": "assets/bin/icons/icon.ico"
+    },
+    "afterAllArtifactBuild": "afterAllArtifactBuild.js",
+    "win": {
+      "icon": "assets/bin/icons/icon.ico",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "nsis": {
+      "artifactName": "Majsoul_Plus-${version}-${platform}-Setup.${ext}"
+    },
+    "mac": {
+      "icon": "assets/bin/icons/icon.icns",
+      "darkModeSupport": true,
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "icon": "assets/bin/icons/icon.png",
+      "category": "Game",
+      "target": [
+        "tar.gz"
+      ],
+      "fileAssociations": [
+        {
+          "ext": "mspr",
+          "description": "Majsoul Plus ResourcePack",
+          "icon": "assets/bin/icons/icon.ico"
+        },
+        {
+          "ext": "mspe",
+          "description": "Majsoul Plus Extension",
+          "icon": "assets/bin/icons/icon.ico"
+        },
+        {
+          "ext": "mspm",
+          "description": "Majsoul Plus Extension",
+          "icon": "assets/bin/icons/icon.ico"
+        },
+        {
+          "ext": "mspt",
+          "description": "Majsoul Plus Tool",
+          "icon": "assets/bin/icons/icon.ico"
+        }
+      ]
+    }
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamapig120/majsoul-custorm-server.git"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/iamapig120/majsoul-custorm-server/issues"
+  },
+  "homepage": "https://github.com/iamapig120/majsoul-custorm-server#readme",
+  "dependencies": {
+    "adm-zip": "git+https://github.com/cthackers/adm-zip.git",
+    "ajv": "^6.10.2",
+    "chalk": "^2.4.2",
+    "comma-separated-values": "^3.6.4",
+    "electron-fetch": "^1.4.0",
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
+    "prettier": "^1.19.1",
+    "semver": "^6.3.0",
+    "tcp-ping": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.4.13",
+    "@types/koa": "^2.11.0",
+    "@types/koa-router": "^7.0.42",
+    "@types/ncp": "^2.0.3",
+    "@types/prettier": "^1.19.0",
+    "@types/semver": "^6.2.0",
+    "@types/tcp-ping": "^0.1.0",
+    "cross-env": "^5.2.1",
+    "electron": "7.3.2",
+    "electron-builder": "^21.2.0",
+    "gts": "^1.1.2",
+    "ncp": "^2.0.0",
+    "node-sass": "^4.13.0",
+    "run-electron": "^1.0.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3",
+    "yarn": "^1.22.0"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "keywords": []
+}
